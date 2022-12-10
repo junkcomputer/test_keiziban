@@ -1,6 +1,7 @@
 package app.okuyama.yuu.test_keiziban
 
-data class Datas (
+data class AddDatas(
+    val thread: String = "",
     val name: String = "",
     val text: String = ""
 )

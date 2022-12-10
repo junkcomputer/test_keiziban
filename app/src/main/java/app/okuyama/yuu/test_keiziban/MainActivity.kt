@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
             )
 
             //書き込み
-            db.collection("Test")
+            db.collection("Thread")
                 .add(data)
                 .addOnSuccessListener { documentReference ->
                     Log.d(TAG, "DocumentSnapshot written with ID: ${documentReference.id}")
@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         //読み込み
-        db.collection("Test")
+        db.collection("Thread")
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
