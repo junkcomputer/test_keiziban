@@ -11,35 +11,36 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import app.okuyama.yuu.test_keiziban.databinding.ActivityAddBinding
 import app.okuyama.yuu.test_keiziban.databinding.ActivityMainBinding
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import org.checkerframework.checker.units.qual.A
+import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var Mainbinding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        binding = ActivityMainBinding.inflate(layoutInflater).apply { setContentView(this.root) }
+        Mainbinding = ActivityMainBinding.inflate(layoutInflater).apply { setContentView(this.root) }
 
         val db = Firebase.firestore
 
 //送信ボタン
-        binding.sousin.setOnClickListener {
+        Mainbinding.sousin.setOnClickListener {
 
             val data = Datas(
-                name = binding.onamae.text.toString(),
-                text = binding.kakiko.text.toString()
+                name = Mainbinding.onamae.text.toString(),
+                text = Mainbinding.kakiko.text.toString()
             )
 
             //書き込み
-            db.collection("Thread")
-                .add(data)
-                .addOnSuccessListener { documentReference ->
-                    Log.d(TAG, "DocumentSnapshot written with ID: ${documentReference.id}")
+            db.collection("Thread").document()
+                .set(data)
+                .addOnSuccessListener {
                 }
-                .addOnFailureListener { e ->
-                    Log.w(TAG, "Error adding document", e)
+                .addOnFailureListener {
                 }
 
             val MainIntent: Intent = Intent(this,MainActivity::class.java)
@@ -78,7 +79,7 @@ class MainActivity : AppCompatActivity() {
                     textTextView.layoutParams = lp
                     idTextView.layoutParams = lp
 
-                    binding.yomikomikun.addView(layout)
+                    Mainbinding.yomikomikun.addView(layout)
                 }
             }
 
@@ -86,7 +87,7 @@ class MainActivity : AppCompatActivity() {
                 Log.w(TAG,"Error reading document",e)
             }
 
-        binding.kousinkun.setOnClickListener {
+        Mainbinding.kousinkun.setOnClickListener {
             val MainIntent: Intent = Intent(this,MainActivity::class.java)
             startActivity(MainIntent)
         }

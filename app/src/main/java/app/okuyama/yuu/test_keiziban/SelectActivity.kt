@@ -9,36 +9,42 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
+import app.okuyama.yuu.test_keiziban.databinding.ActivityAddBinding
 import app.okuyama.yuu.test_keiziban.databinding.ActivitySelectBinding
 import app.okuyama.yuu.test_keiziban.databinding.ThreadNameBinding
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlin.concurrent.thread
 
 class SelectActivity : AppCompatActivity() {
-    private lateinit var binding: ActivitySelectBinding
+    private lateinit var Selectbinding: ActivitySelectBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_select)
-        binding = ActivitySelectBinding.inflate(layoutInflater).apply { setContentView(this.root) }
+        Selectbinding = ActivitySelectBinding.inflate(layoutInflater).apply { setContentView(this.root) }
 
         val db = Firebase.firestore
 
         val adapter = ThreadNameAdapter()
+
         db.collection("Thread")
             .get()
             .addOnSuccessListener { result ->
-                val datas  = mutableListOf<Datas>()
+                //val datas  = mutableListOf<Datas>()
+                val threadNames = mutableListOf<ThreadNames>()
                 for (document in result) {
-                    datas.add(Datas(document.data.get("name").toString(),document.data.get("text").toString()))
+                    //datas.add(Datas(document.data.get("name").toString(),document.data.get("text").toString()))
+                    threadNames.add(ThreadNames(document.id))
                 }
-                adapter.updateThreads(datas)
+                //adapter.updateThreads(datas)
+                adapter.updateThreads(threadNames)
             }
 
-        binding.recyclerView.adapter = adapter
+        Selectbinding.recyclerView.adapter = adapter
 
         val AddIntent:Intent = Intent(this,AddActivity::class.java)
 
-        binding.tuika.setOnClickListener {
+        Selectbinding.tuika.setOnClickListener {
             startActivity(AddIntent)
         }
     }

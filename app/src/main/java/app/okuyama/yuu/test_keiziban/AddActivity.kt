@@ -11,31 +11,31 @@ import com.google.firebase.ktx.Firebase
 import kotlin.concurrent.thread
 
 class AddActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityAddBinding
+    private lateinit var Addbinding: ActivityAddBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add)
-        binding = ActivityAddBinding.inflate(layoutInflater).apply { setContentView(this.root) }
+        Addbinding = ActivityAddBinding.inflate(layoutInflater).apply { setContentView(this.root) }
 
         var db = Firebase.firestore
 
-        binding.sousinTuikaKun.setOnClickListener {
+        val MainIntent: Intent = Intent(this,MainActivity::class.java)
+
+        Addbinding.sousinTuikaKun.setOnClickListener {
 
             val data = Datas(
-                name = binding.onamaeTuikaKun.text.toString(),
-                text = binding.honbunTuikaKun.text.toString()
+                name = Addbinding.onamaeTuikaKun.text.toString(),
+                text = Addbinding.honbunTuikaKun.text.toString()
             )
 
-            db.collection("Thread").document(binding.threadTuikaKun.text.toString())
+            db.collection("Thread").document(Addbinding.threadTuikaKun.text.toString())
                 .set(data)
                 .addOnSuccessListener { documentReference ->
+                    startActivity(MainIntent)
                 }
                 .addOnFailureListener { e ->
                     Log.w(ContentValues.TAG, "Error adding document", e)
                 }
-
-            val MainIntent: Intent = Intent(this,MainActivity::class.java)
-            startActivity(MainIntent)
         }
 
 
