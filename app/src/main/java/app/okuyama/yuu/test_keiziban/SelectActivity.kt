@@ -30,20 +30,18 @@ class SelectActivity : AppCompatActivity() {
         db.collection("Thread")
             .get()
             .addOnSuccessListener { result ->
-                //val datas  = mutableListOf<Datas>()
                 val threadNames = mutableListOf<ThreadNames>()
                 for (document in result) {
-                    //datas.add(Datas(document.data.get("name").toString(),document.data.get("text").toString()))
                     threadNames.add(ThreadNames(document.id))
                 }
-                //adapter.updateThreads(datas)
                 adapter.updateThreads(threadNames)
             }
 
         Selectbinding.recyclerView.adapter = adapter
 
-        val AddIntent:Intent = Intent(this,AddActivity::class.java)
 
+
+        val AddIntent:Intent = Intent(this,AddActivity::class.java)
         Selectbinding.tuika.setOnClickListener {
             startActivity(AddIntent)
         }

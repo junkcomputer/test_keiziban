@@ -20,6 +20,7 @@ class AddActivity : AppCompatActivity() {
         var db = Firebase.firestore
 
         val MainIntent: Intent = Intent(this,MainActivity::class.java)
+        MainIntent.putExtra("threadName",Addbinding.threadTuikaKun.text.toString())
 
         Addbinding.sousinTuikaKun.setOnClickListener {
 
