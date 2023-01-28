@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         //読み込み
-        db.collection("Thread").document(rThreadName)
+        /*db.collection("Thread").document(rThreadName)
             .get()
             .addOnCompleteListener { result ->
                 val datas  = mutableListOf<Datas>()
@@ -69,6 +69,14 @@ class MainActivity : AppCompatActivity() {
             }
             .addOnFailureListener { e ->
                 Log.w(TAG,"Error reading document",e)
+            }
+         */
+        db.collection("Thread")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result){
+                    Log.d(TAG,"${document.id} => ${document.data.get("gotohana")}")
+                }
             }
 
         binding.kousinkun.setOnClickListener {

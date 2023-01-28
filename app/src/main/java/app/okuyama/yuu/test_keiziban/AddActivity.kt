@@ -37,6 +37,8 @@ class AddActivity : AppCompatActivity() {
                 .addOnFailureListener { e ->
                     Log.w(ContentValues.TAG, "Error adding document", e)
                 }
+
+            startActivity(MainIntent)
         }
 
 
